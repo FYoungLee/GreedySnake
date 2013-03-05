@@ -1,0 +1,4 @@
+GreedySnake
+===========
+
+a C++ project
