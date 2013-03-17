@@ -9,7 +9,7 @@ class Cmap
 {
 		friend class Csnake; 
 		int rSign; //横坐标 
-		int lSign; //竖坐标 
+		int lSign; //纵坐标 
 	public: 
 	    Cmap(int r,int l){
 			setPoint(r,l);
@@ -35,9 +35,15 @@ class Csnake
 		Cmap secondSign;    //蛇颈坐标 
 		Cmap lastSign;      //蛇尾坐标 
 		Cmap nextSign;      //预备蛇头 
+		//添加自动蛇的属性 2013-3-8 9：45 xl
+		Cmap firstSign2;	//自动蛇头坐标
+		Cmap secondSign2;   //自动蛇颈坐标 
+		Cmap lastSign2;     //自动蛇尾坐标 
+		Cmap nextSign2;     //自动预备蛇头 
 		int row;            //列数 
 		int line;           //行数 
 		int count;          //蛇身长度 
+		int count2;			//自动蛇身长度
 
 		vector<vector<char> > snakeMap;     //整个游戏界面 
 		queue<Cmap> MySnake;                //我的蛇
@@ -59,12 +65,13 @@ class Csnake
 		} 
 		// 判断是否到达边界，如果到了则判断失败
 		bool isDead(const Cmap& cmp) {
-			return ( getSymbol(cmp)=='X' || cmp.rSign == row-1 || cmp.rSign== 0 || cmp.lSign == line-1 || cmp.lSign == 0 ); 
+			// add the auto snake 2013-3-11 9:10 xl
+			return ( getSymbol(cmp)=='X' || cmp.rSign == row-1 || cmp.rSign== 0 || cmp.lSign == line-1 || cmp.lSign == 0 ||getSymbol(cmp)=='c'||getSymbol(cmp)=='='); 
 		} 
 		int GetDirections()const;   //从键盘获取方向键，分别为“上”“下”“左”“右”键
 		void InitInstance();        //初始化游戏界面 
 		bool UpdataGame();          //更新游戏界面 
 		void ShowGame();            //显示游戏界面 
-		void autoDecision();		//电脑蛇自动控制方向
+		bool autoDecision(int r, int l);		//电脑蛇自动控制方向
 }; 
 #endif // SNAKE_H 
